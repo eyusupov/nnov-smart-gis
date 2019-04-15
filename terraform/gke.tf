@@ -1,0 +1,26 @@
+provider "google" {
+	credentials = "${file("gce_key.json")}"
+  region  = "us-central1"
+  zone    = "us-central1-b"
+	project = "smart-nnov"
+}
+
+# TODO: where are the extra services coming from?
+resource "google_project_services" "nnov-services" {
+  services = ["cloudresourcemanager.googleapis.com", "compute.googleapis.com", "container.googleapis.com", "serviceusage.googleapis.com", "oslogin.googleapis.com", "iam.googleapis.com", "containerregistry.googleapis.com", "iamcredentials.googleapis.com", "storage-api.googleapis.com", "bigquery-json.googleapis.com", "pubsub.googleapis.com"]
+	project = "smart-nnov"
+}
+
+resource "google_compute_network" "nnov-dev-network" {
+  name = "nnov-dev-network"
+	project = "smart-nnov"
+	depends_on = ["google_project_services.nnov-services"]
+}
+
+resource "google_container_cluster" "nnov-dev-cluster" {
+  name = "nnov-development"
+	network = "nnov-dev-network"
+  initial_node_count = 2
+	project = "smart-nnov"
+	depends_on = ["google_project_services.nnov-services", "google_compute_network.nnov-dev-network"]
+}
