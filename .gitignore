@@ -1,0 +1,4 @@
+3rdparty
+terraform/gce_key.json
+**/.terraform
+*.tfstate*

@@ -1,0 +1,6 @@
+postgresql:
+  image:
+    repository: coltonsberry/bitnami-postgis
+    tag: latest
+  postgresqlUser: postgres
+  postgresqlPassword: postgres
