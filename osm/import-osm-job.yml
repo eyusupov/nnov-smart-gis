@@ -7,20 +7,23 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: import-osm
-        image: openmaptiles/import-osm:0.5
-        envFrom:
-        - configMapRef:
-            name: import-osm-configmap 
+      - name: import-osm-job
+        image: gcr.io/smart-nnov/bitnami-postgis:eyusupov4
+        command: ["pg_restore", "/import/osm.dump.gz", "--schema=public", "-d", "gis_test"]
+        workingDir: /home/dev
+        securityContext:
+          privileged: true
+        env:
+        - name: PGUSER
+          value: "postgres"
+        - name: PGPASSWORD
+          value: "smart-city-nnov!"
+        - name: PGHOST
+          value: 10.63.245.54
         volumeMounts:
         - mountPath: /import
           name: import
-        - name: mapping-volume
-          mountPath: /mapping
       volumes:
       - name: import
         persistentVolumeClaim:
           claimName: data-pvc
-      - name: mapping-volume
-        configMap:
-          name: osm-mapping-configmap
