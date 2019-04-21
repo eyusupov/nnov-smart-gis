@@ -1,5 +1,6 @@
 {
   "version": 8,
+  "glyphs": "http://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
   "sources": {
     "buildings": {
       "type": "vector",
@@ -20,56 +21,84 @@
       "type": "vector",
       "tiles": ["http://34.66.50.178:3000/public.geo_water_area/{z}/{x}/{y}.pbf"],
       "maxzoom": 30
+    },
+    "building_age": {
+      "type": "vector",
+      "tiles": ["http://34.66.50.178:3000/rpc/public.building_age/{z}/{x}/{y}.pbf?year=2019"],
+      "maxzoom": 30
     }
   },
-  "layers": [{
-    "id": "background",
-    "type": "background",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+        "paint": {
+          "background-color": "#485E77"
+      }
+    }, {
+      "id": "water",
+      "type": "fill",
+      "source": "water",
+      "source-layer": "public.geo_water_area",
       "paint": {
-        "background-color": "#485E77"
+        "fill-color": "blue"
+      }
+    }, {
+      "id": "buildings",
+      "type": "line",
+      "source": "buildings",
+      "source-layer": "public.exist_buildings",
+      "paint": {
+        "line-color": "#F56745"
+      }
+    }, {
+      "id": "extrusion",
+      "type": "fill-extrusion",
+      "source": "buildings",
+      "source-layer": "public.exist_buildings",
+      "paint": {
+        "fill-extrusion-color": "#485e77",
+        "fill-extrusion-height": ["*", ["get", "floors"], 3],
+        "fill-extrusion-base": 0,
+        "fill-extrusion-opacity": 0.9
+      }
+    }, {
+      "id": "mo_boundary",
+      "type": "line",
+      "source": "mo_boundary",
+      "source-layer": "public.mo_boundary",
+      "paint": {
+        "line-color": "blue"
+      }
+    }, {
+      "id": "districts",
+      "type": "line",
+      "source": "districts",
+      "source-layer": "public.districts",
+      "paint": {
+        "line-color": "red"
+      }
+    }, {
+      "id": "age",
+      "type": "symbol",
+      "source": "building_age",
+      "source-layer": "public.building_age",
+      "layout": {
+        "text-field": ["get", "age"],
+        "visibility": "visible",
+        "text-font": ["Open Sans Regular"],
+        "text-size": 20,
+        "text-max-width": 5,
+        "text-anchor": "center",
+        "text-line-height": 1,
+        "text-justify": "center",
+        "text-padding": 20,
+        "text-allow-overlap": false
+      },
+      "paint":{
+        "text-opacity": 1,
+        "text-color": "red"
+      }
     }
-  }, {
-    "id": "buildings",
-    "type": "line",
-    "source": "buildings",
-    "source-layer": "public.exist_buildings",
-    "paint": {
-      "line-color": "#F56745"
-    }
-  }, {
-    "id": "extrusion",
-    "type": "fill-extrusion",
-    "source": "buildings",
-    "source-layer": "public.exist_buildings",
-    "paint": {
-      "fill-extrusion-color": "#485e77",
-      "fill-extrusion-height": ["*", ["get", "floors"], 10],
-      "fill-extrusion-base": 0,
-      "fill-extrusion-opacity": 0.9
-    }
-  }, {
-    "id": "mo_boundary",
-    "type": "line",
-    "source": "mo_boundary",
-    "source-layer": "public.mo_boundary",
-    "paint": {
-      "line-color": "blue"
-    }
-  }, {
-    "id": "districts",
-    "type": "line",
-    "source": "districts",
-    "source-layer": "public.districts",
-    "paint": {
-      "line-color": "red"
-    }
-  }, {
-    "id": "water",
-    "type": "fill",
-    "source": "water",
-    "source-layer": "public.geo_water_area",
-    "paint": {
-      "fill-color": "blue"
-    }
-  }]
+  ]
 }

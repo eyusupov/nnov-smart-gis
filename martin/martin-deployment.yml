@@ -25,6 +25,9 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/martin
+        env:
+          - name: RUST_LOG
+            value: actix_web=info,martin=debug,postgres=debug
       volumes:
         - name: config-volume
           configMap:

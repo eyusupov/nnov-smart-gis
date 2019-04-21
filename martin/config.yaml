@@ -30,6 +30,10 @@ function_sources:
     id: public.districts
     schema: public
     function: districts
+  public.building_age:
+    id: public.building_age
+    schema: public
+    function: building_age
   public.openmaptiles:
     id: public.openmaptiles
     schema: public

@@ -17,7 +17,7 @@ spec:
       containers:
       - name: debug
         image: gcr.io/smart-nnov/bitnami-postgis:eyusupov3
-        command: ["sleep", "36000"]
+        command: ["pg_restore", "-d", "/import/gis_test/osm.dump.gz", "--schema=public"]
         workingDir: /home/dev
         securityContext:
           privileged: true
@@ -27,4 +27,11 @@ spec:
         - name: PGPASSWORD
           value: "smart-city-nnov!"
         - name: PGHOST
-          value: quaffing-otter-postgresql
+          value: 10.63.245.54
+        volumeMounts:
+        - mountPath: /import
+          name: import
+      volumes:
+      - name: import
+        persistentVolumeClaim:
+          claimName: data-pvc
