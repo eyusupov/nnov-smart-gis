@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: download-osm-job
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: import-osm
+        image: openmaptiles/import-osm:0.5
+        command: ["./download-geofabrik.sh", "volga-fed-district"]
+        envFrom:
+        - configMapRef:
+            name: import-osm-configmap 
+        volumeMounts:
+        - mountPath: /import
+          name: import
+      volumes:
+      - name: import
+        persistentVolumeClaim:
+          claimName: data-pvc

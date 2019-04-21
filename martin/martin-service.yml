@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: martin
+spec:
+  type: LoadBalancer
+  selector:
+    name: martin
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000

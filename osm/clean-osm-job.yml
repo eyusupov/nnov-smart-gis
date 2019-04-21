@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clean-osm-job
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: import-osm
+        image: openmaptiles/import-osm:0.5
+        command: ["rm", "-rf", "/import/*"]
+        envFrom:
+        - configMapRef:
+            name: import-osm-configmap 
+        volumeMounts:
+        - mountPath: /import
+          name: import
+      volumes:
+      - name: import
+        persistentVolumeClaim:
+          claimName: data-pvc

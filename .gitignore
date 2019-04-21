@@ -1,4 +1,5 @@
-3rdparty
 terraform/gce_key.json
 **/.terraform
+**/data
 *.tfstate*
+helm/nnov/charts/*.tgz

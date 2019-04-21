@@ -1,0 +1,75 @@
+{
+  "version": 8,
+  "sources": {
+    "buildings": {
+      "type": "vector",
+      "tiles": ["http://34.66.50.178:3000/rpc/public.exist_buildings/{z}/{x}/{y}.pbf"],
+      "maxzoom": 30
+    },
+    "mo_boundary": {
+      "type": "vector",
+      "tiles": ["http://34.66.50.178:3000/rpc/public.mo_boundary/{z}/{x}/{y}.pbf"],
+      "maxzoom": 30
+    },
+    "districts": {
+      "type": "vector",
+      "tiles": ["http://34.66.50.178:3000/rpc/public.districts/{z}/{x}/{y}.pbf"],
+      "maxzoom": 30
+    },
+    "water": {
+      "type": "vector",
+      "tiles": ["http://34.66.50.178:3000/public.geo_water_area/{z}/{x}/{y}.pbf"],
+      "maxzoom": 30
+    }
+  },
+  "layers": [{
+    "id": "background",
+    "type": "background",
+      "paint": {
+        "background-color": "#485E77"
+    }
+  }, {
+    "id": "buildings",
+    "type": "line",
+    "source": "buildings",
+    "source-layer": "public.exist_buildings",
+    "paint": {
+      "line-color": "#F56745"
+    }
+  }, {
+    "id": "extrusion",
+    "type": "fill-extrusion",
+    "source": "buildings",
+    "source-layer": "public.exist_buildings",
+    "paint": {
+      "fill-extrusion-color": "#485e77",
+      "fill-extrusion-height": ["*", ["get", "floors"], 10],
+      "fill-extrusion-base": 0,
+      "fill-extrusion-opacity": 0.9
+    }
+  }, {
+    "id": "mo_boundary",
+    "type": "line",
+    "source": "mo_boundary",
+    "source-layer": "public.mo_boundary",
+    "paint": {
+      "line-color": "blue"
+    }
+  }, {
+    "id": "districts",
+    "type": "line",
+    "source": "districts",
+    "source-layer": "public.districts",
+    "paint": {
+      "line-color": "red"
+    }
+  }, {
+    "id": "water",
+    "type": "fill",
+    "source": "water",
+    "source-layer": "public.geo_water_area",
+    "paint": {
+      "fill-color": "blue"
+    }
+  }]
+}

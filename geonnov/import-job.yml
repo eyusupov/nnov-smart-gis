@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: import-job
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: debug
+        image: gcr.io/smart-nnov/nnov-tools:latest
+        command: ["/home/dev/import"]
+        workingDir: /home/dev
+        securityContext:
+          privileged: true
+        env:
+        - name: PGUSER
+          value: "postgres"
+        - name: PGPASSWORD
+          value: "smart-city-nnov!"
+        - name: PGHOST
+          value: quaffing-otter-postgresql

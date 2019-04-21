@@ -25,6 +25,14 @@ resource "google_container_cluster" "nnov-dev-cluster" {
 	depends_on = ["google_project_services.nnov-services", "google_compute_network.nnov-dev-network"]
 }
 
+resource "google_compute_address" "postgis-ip-address" {
+  name = "postgis-ip-address"
+}
+
+resource "google_compute_address" "martin-ip-address" {
+  name = "martin-ip-address"
+}
+
 resource "kubernetes_service_account" "tiller" {
   metadata {
     name = "tiller"

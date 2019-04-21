@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debug
+  labels:
+    app: debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debug
+  template:
+    metadata:
+      labels:
+        app: debug
+    spec:
+      containers:
+      - name: debug
+        image: gcr.io/smart-nnov/bitnami-postgis:eyusupov3
+        command: ["sleep", "36000"]
+        workingDir: /home/dev
+        securityContext:
+          privileged: true
+        env:
+        - name: PGUSER
+          value: "postgres"
+        - name: PGPASSWORD
+          value: "smart-city-nnov!"
+        - name: PGHOST
+          value: quaffing-otter-postgresql

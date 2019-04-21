@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: martin
+  labels:
+    app: martin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: martin
+  template:
+    metadata:
+      labels:
+        app: martin
+    spec:
+      containers:
+      - name: martin
+        image: urbica/martin
+        command: ["martin", "--config", "/etc/martin/config.yaml"]
+        ports:
+        - containerPort: 3000
+          hostPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/martin
+      volumes:
+        - name: config-volume
+          configMap:
+            name: martin-configmap

@@ -1,0 +1,49 @@
+---
+# Database connection string
+connection_string: "postgres://postgres:smart-city-nnov!@34.66.134.165/gis_test"
+
+# Connection keep alive timeout [default: 75]
+keep_alive: 75
+
+# The socket address to bind [default: 0.0.0.0:3000]
+listen_addresses: "0.0.0.0:3000"
+
+# Maximum connections pool size [default: 20]
+pool_size: 20
+
+# Number of web server workers
+worker_processes: 8
+
+watch: true
+
+# associative arrays of function sources
+function_sources:
+  public.exist_buildings:
+    id: public.exist_buildings
+    schema: public
+    function: exist_buildings
+  public.mo_boundary:
+    id: public.mo_boundary
+    schema: public
+    function: mo_boundary
+  public.districts:
+    id: public.districts
+    schema: public
+    function: districts
+  public.openmaptiles:
+    id: public.openmaptiles
+    schema: public
+    function: openmaptiles
+
+table_sources:
+  public.geo_water_area:
+    id: public.geo_water_area
+    schema: public
+    table: geo_water_area
+    geometry_column: wkb_geometry
+    srid: 3857
+    extent: 4096
+    buffer: 64
+    clip_geom: true
+    geometry_type: GEOMETRY
+    properties: {}

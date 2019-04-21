@@ -1,6 +1,12 @@
 postgresql:
-  image:
-    repository: coltonsberry/bitnami-postgis
-    tag: latest
   postgresqlUser: postgres
-  postgresqlPassword: postgres
+  postgresqlPassword: smart-city-nnov!
+
+  image:
+    registry: gcr.io/smart-nnov
+    repository: bitnami-postgis
+    tag: eyusupov4
+
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 34.66.134.165

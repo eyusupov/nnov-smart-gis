@@ -1,0 +1,24 @@
+#!/bin/env ruby
+layers = %w[
+  ORCL_PORTAL:V_PORTAL2_EXIST_BUILDINGS_A
+  ORCL_PORTAL:V_PORTAL2_VETH_BUILDINGS_A
+  ORCL_PORTAL:V_PORTAL2_AVAR_BUILDINGS_A
+  ORCL_PORTAL:V_PORTAL2_CONSTR_BUILDINGS_A
+  ORCL_PORTAL:V_PORTAL2_EXIST_BUILDINGS_G
+  ORCL_PORTAL:V_PORTAL2_UDC_ATI
+  ORCL_PORTAL:V_PORTAL_GKN
+  ORCL_PORTAL:V_PORTAL2_AD_PERM_ACTUAL
+  ORCL_PORTAL:V_PORTAL2_UBORKA_ZUT
+]
+Dir['data/ORCL_*.json'].each do |file|
+  table = File.basename(file).split(':')[-1].split('.')[0].downcase
+  puts table
+  `ogr2ogr -f "PostgreSQL" PG:"dbname=gis_test user=postgres" #{file} -nln #{table}`
+end
+layers.each do |layer|
+  table = layer.split(':')[-1].downcase
+  Dir["data/piecewise/#{layer}*.json"].each do |file|
+    puts File.basename(table)
+    `ogr2ogr -f "PostgreSQL" PG:"dbname=gis_test user=postgres" #{file} -nln #{table} -append`
+  end
+end
